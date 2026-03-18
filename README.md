@@ -8,7 +8,7 @@
 
 ## 核心优势：为什么选择 Just My Socks？
 
-Just My Socks 最大的卖点就是**“自动换 IP，永不被墙”**。
+Just My Socks 最大的卖点就是“**自动换 IP，永不被墙**”。
 
 当遭遇网络封锁或干扰时，后台系统会自动检测并无缝切换到全新可用 IP。你不需要自己去排查或折腾服务器，也无需担心商家跑路。
 
@@ -34,7 +34,7 @@ Just My Socks 最大的卖点就是**“自动换 IP，永不被墙”**。
 
 想要查看以上所有套餐的详细对比，或者获取最新的节点测速报告，请直接通过下方链接前往：
 
-👉 **[前往 JMS 优选官](https://justmysocksguide.github.io/)** （查看详细评测与更多套餐）
+👉 **[前往 JMS 优选官](https://justmysocksguide.github.io/)** （查看详细评测与更多套餐）  
 👉 **[前往 Just My Socks 官网](https://justmysocks6.net/members/aff.php?aff=36542)** （浏览全部产品并下单）
 
 ---
