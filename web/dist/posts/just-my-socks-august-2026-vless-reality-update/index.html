@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="zh" data-astro-cid-gysqo7gh> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>2026 年 8 月 Just My Socks 节点 s3/s4/s5/s801 协议升级 VLESS Reality</title><meta name="description" content="官方于 2026 年 8 月对服务器节点进行了重大协议架构升级：s3、s4、s5 及 s801 节点已全面切换为 VLESS/Reality 协议。本文深度拆解此次升级背后的技术变动、老客户端握手失败原因，并提供 Jamjams 官方客户端与 v2rayN 7.23.4+ 的完整迁移恢复指南。"><script type="module">const l={siteName:"JMS 优选官",affiliateBaseUrl:"https://justmysocks6.net/members/aff.php",affiliateId:"36542",getAffiliateLink(t){return!t||t==="base"?`${this.affiliateBaseUrl}?aff=${this.affiliateId}`:`${this.affiliateBaseUrl}?aff=${this.affiliateId}&pid=${t}`},mirrors:[{domain:"justmysocks.net",label:"官方网站",note:"官方原始域名，访问可能需要代理",isOfficial:!0,isCurrent:!1},{domain:"justmysocks1.net",label:"镜像站 #1",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks2.net",label:"镜像站 #2",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks3.net",label:"镜像站 #3",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks5.net",label:"镜像站 #4",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks6.net",label:"镜像站 #5",note:"当前整站默认推广域名，国内稳定可访问",isOfficial:!1,isCurrent:!0}],getMirrorLink(t,s){const i=`https://${t}/members/aff.php`;return s?`${i}?aff=${this.affiliateId}&pid=${s}`:`${i}?aff=${this.affiliateId}`},brands:{"Just My Socks":{couponPath:"/coupons/just-my-socks",tutorialPath:"/posts/how-to-use-just-my-socks-coupon",couponLabel:"领券立省 5.2%",tutorialLabel:"新手图文入门指南"}},getBrandResource(t){const s=t||"Just My Socks";return this.brands[s]||this.brands["Just My Socks"]}};document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll('a[href^="aff://"]').forEach(e=>{const o=e.getAttribute("href")?.replace("aff://","");if(o){const r=l.getAffiliateLink(o);e.setAttribute("href",r),e.setAttribute("target","_blank"),e.setAttribute("rel","noopener noreferrer")}});const s=document.getElementById("progress-bar");window.addEventListener("scroll",()=>{const e=document.body.scrollTop||document.documentElement.scrollTop,o=document.documentElement.scrollHeight-document.documentElement.clientHeight,r=e/o*100;s&&(s.style.width=r+"%")});const i={root:null,rootMargin:"-80px 0px -60% 0px",threshold:0},a=new IntersectionObserver(e=>{e.forEach(o=>{if(o.isIntersecting){const r=o.target.getAttribute("id");document.querySelectorAll(".toc-item a").forEach(n=>{n.classList.toggle("active",n.getAttribute("href")===`#${r}`)})}})},i);document.querySelectorAll(".prose h2").forEach(e=>a.observe(e))});</script><style>.navbar[data-astro-cid-5blmo7yk]{background:#0f172af2;backdrop-filter:blur(12px);border-bottom:1px solid rgba(51,65,85,.6);position:sticky;top:0;z-index:100}.nav-inner[data-astro-cid-5blmo7yk]{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:2rem;height:60px}.logo[data-astro-cid-5blmo7yk]{display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0}.logo-icon[data-astro-cid-5blmo7yk]{font-size:1.3rem}.logo-text[data-astro-cid-5blmo7yk]{font-weight:800;font-size:1.1rem;color:#f1f5f9;letter-spacing:-.5px}.nav-links[data-astro-cid-5blmo7yk]{display:flex;list-style:none;margin:0;padding:0;gap:.25rem;flex:1}.nav-link[data-astro-cid-5blmo7yk]{display:block;padding:.4rem .75rem;border-radius:6px;color:#94a3b8;text-decoration:none;font-size:.9rem;font-weight:500;transition:all .15s;white-space:nowrap}.nav-link[data-astro-cid-5blmo7yk]:hover{color:#f1f5f9;background:#ffffff0f}.nav-link[data-astro-cid-5blmo7yk].active{color:#60a5fa;background:#3b82f61f}.nav-cta[data-astro-cid-5blmo7yk]{display:inline-block;padding:.45rem 1rem;background:#7c3aed33;border:1px solid rgba(167,139,250,.4);color:#c4b5fd;font-weight:700;font-size:.85rem;border-radius:8px;text-decoration:none;white-space:nowrap;transition:all .15s;flex-shrink:0}.nav-cta[data-astro-cid-5blmo7yk]:hover{background:#7c3aed59;color:#ddd6fe}.nav-cta-mirror[data-astro-cid-5blmo7yk]{background:#06b6d426;border-color:#22d3ee59;color:#67e8f9}.nav-cta-mirror[data-astro-cid-5blmo7yk]:hover{background:#06b6d44d;color:#a5f3fc}@media(max-width:640px){.nav-links[data-astro-cid-5blmo7yk]{gap:0}.nav-link[data-astro-cid-5blmo7yk]{padding:.4rem .5rem;font-size:.82rem}.nav-cta[data-astro-cid-5blmo7yk]{display:none}}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.D0H7fLRO.css"></head> <body data-astro-cid-gysqo7gh> <div class="progress-wrap" data-astro-cid-gysqo7gh><div id="progress-bar" data-astro-cid-gysqo7gh></div></div> <nav class="navbar" data-astro-cid-5blmo7yk> <div class="nav-inner" data-astro-cid-5blmo7yk> <!-- Logo --> <a href="/" class="logo" data-astro-cid-5blmo7yk> <span class="logo-icon" data-astro-cid-5blmo7yk>⚡</span> <span class="logo-text" data-astro-cid-5blmo7yk>JMS 优选官</span> </a> <!-- 链接 --> <ul class="nav-links" data-astro-cid-5blmo7yk> <li data-astro-cid-5blmo7yk> <a href="/" class="nav-link " data-astro-cid-5blmo7yk> 首页 </a> </li><li data-astro-cid-5blmo7yk> <a href="/products" class="nav-link " data-astro-cid-5blmo7yk> 套餐列表 </a> </li><li data-astro-cid-5blmo7yk> <a href="/scenarios" class="nav-link " data-astro-cid-5blmo7yk> 场景推荐 </a> </li><li data-astro-cid-5blmo7yk> <a href="/coupons" class="nav-link " data-astro-cid-5blmo7yk> 优惠码 </a> </li><li data-astro-cid-5blmo7yk> <a href="/posts" class="nav-link active" data-astro-cid-5blmo7yk> 教程 </a> </li> </ul> <!-- CTA --> <a href="/mirrors" class="nav-cta nav-cta-mirror" data-astro-cid-5blmo7yk>
+🌐 官网地址
+</a> <a href="/coupons/just-my-socks" class="nav-cta" data-astro-cid-5blmo7yk>
+🎟️ 领优惠码
+</a> </div> </nav>  <div class="hero" data-astro-cid-gysqo7gh> <div class="badge" data-astro-cid-gysqo7gh>教程</div> <h1 data-astro-cid-gysqo7gh>2026 年 8 月 Just My Socks 节点 s3/s4/s5/s801 协议升级 VLESS Reality</h1> <div class="meta" data-astro-cid-gysqo7gh>最后更新于 2026-08-27</div> </div> <div class="main-layout" data-astro-cid-gysqo7gh> <!-- ToC Sidebar --> <aside class="sidebar" data-astro-cid-gysqo7gh> <div class="toc-title" data-astro-cid-gysqo7gh>本文目录</div> <ul class="toc-list" data-astro-cid-gysqo7gh> <li class="toc-item" data-astro-cid-gysqo7gh> <a href="#jms-节点发生了哪些变化" data-astro-cid-gysqo7gh>JMS 节点发生了哪些变化？</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#为什么会导致-断网" data-astro-cid-gysqo7gh>为什么会导致 “断网”？</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#官方推荐的-2-套方案" data-astro-cid-gysqo7gh>官方推荐的 2 套方案</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#常见问题解答faq" data-astro-cid-gysqo7gh>常见问题解答（FAQ）</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#总结" data-astro-cid-gysqo7gh>总结</a> </li> </ul> </aside> <div class="content-wrap" data-astro-cid-gysqo7gh> <article class="prose" data-astro-cid-gysqo7gh> <p>2026 年 8 月，<a href="aff://base">Just My Socks</a> 官方针对底层服务器集群陆续推送了一次<strong>非向下兼容的协议架构升级（Breaking Change）</strong>：继前几日将 <code>s3</code>、<code>s5</code> 和 <code>s801</code> 节点升级为 <strong>VLESS / Reality</strong> 协议后，官方现已正式完成主力 <code>s4</code> 节点的协议切换。</p>
+<blockquote>
+<p>📢 <strong>官方更新通告原文</strong>：<br>
+<em>“We have rolled out an update to s4 servers: we have switched them to vless/reality protocol. s3, s5 and s801 have been switched to vless/reality a few days ago. Jamjams has been updated to support vless/reality as well; please update: <a href="https://jamjamsapp.com/">https://jamjamsapp.com/</a>. Alternatively, you can use latest v2rayN; we have successfully tested the following version: <a href="https://github.com/2dust/v2rayN/releases/tag/7.23.4">https://github.com/2dust/v2rayN/releases/tag/7.23.4</a>”</em></p>
+</blockquote>
+<p>对于许多半年甚至一两年前配置好客户端后就从未更新过的老用户而言，这次升级会直接导致：<strong>本地客户端突然出现 s3、s4、s5 节点连接超时、握手失败（Handshake Failed）等问题</strong>。</p>
+<p>本文将为你全面拆解此次协议升级的技术背景、受影响节点与处理部分用户无法连接的问题。</p>
+<h2 id="jms-节点发生了哪些变化">JMS 节点发生了哪些变化？</h2>
+<p>在本次 8 月升级中，官方对底层节点的协议架构进行了全面调整：</p>
+<h3 id="最新节点协议与客户端兼容一览">最新节点协议与客户端兼容一览</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">节点编号</th><th align="left">当前协议 (2026-08 最新)</th><th align="left">客户端兼容</th></tr></thead><tbody><tr><td align="left"><strong>s1 / s2</strong></td><td align="left"><strong>Shadowsocks</strong></td><td align="left">✅ 兼容全平台老旧客户端</td></tr><tr><td align="left"><strong>s3 / s4</strong></td><td align="left"><strong>VLESS + Reality 🆕</strong></td><td align="left">❌ <strong>必须升级客户端</strong></td></tr><tr><td align="left"><strong>s5 / s801</strong></td><td align="left"><strong>VLESS + Reality 🆕</strong></td><td align="left">❌ <strong>必须升级客户端</strong></td></tr></tbody></table>
+<div style="background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%); border-radius: 16px; padding: 1.75rem; color: #f8fafc; margin: 2rem 0; border: 1px solid rgba(59, 130, 246, 0.2); box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.3);">
+  <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
+    <span style="background: #3b82f6; color: white; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px;">核心结论</span>
+    <h4 style="margin: 0; color: #f8fafc; font-size: 1.1rem; font-weight: 700;">为什么你的节点突然连不上？</h4>
+  </div>
+  <p style="margin: 0; color: #cbd5e1; font-size: 0.95rem; line-height: 1.7;">
+    如果你的客户端仅保留了 <strong>s1</strong> 和 <strong>s2</strong> 可以连通，而 <strong>s3、s4、s5、s801 全部超时</strong>，这 <strong>不是服务器故障，也不是你的 IP 被封禁</strong>，而是你的客户端软件版本过旧，无法解析服务端全新的 <strong>VLESS-Reality</strong> 握手协议！
+  </p>
+</div>
+<h2 id="为什么会导致-断网">为什么会导致 “断网”？</h2>
+<p>要彻底解决连不上的问题，首先需要搞清楚这次 8 月升级在技术层面到底改变了什么：</p>
+<div style="margin: 2rem 0; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; background: #ffffff; box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);">
+  <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #f8fafc; padding: 1rem 1.5rem; font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between;">
+    <span>⚡ JMS 2026-08 节点底层升级对客户端的断代影响对比</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; padding: 1.5rem; background: #f8fafc;">
+    <!-- 情况 A -->
+    <div style="background: #fff; border: 1px solid #fecaca; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <span style="background: #ef4444; color: #fff; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">情况 A</span>
+          <strong style="color: #991b1b; font-size: 1rem;">使用老版本客户端</strong>
+        </div>
+        <p style="color: #64748b; font-size: 0.85rem; margin: 0 0 1rem 0;">如旧版 v2rayN 5.x/6.x、老旧 Clash 内核等</p>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: #475569; display: flex; flex-direction: column; gap: 0.6rem;">
+          <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+            <span style="color: #ef4444;">❌</span>
+            <span>无法识别 VLESS 的 Reality 扩展参数</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+            <span style="color: #ef4444;">❌</span>
+            <span>无法完成真实 TLS 证书指纹伪装</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+            <span style="color: #ef4444;">❌</span>
+            <span>服务端直接判定为非法连接并丢弃数据</span>
+          </li>
+        </ul>
+      </div>
+      <div style="margin-top: 1.25rem; padding: 0.75rem; background: #fef2f2; border-radius: 8px; border-left: 4px solid #ef4444; color: #b91c1c; font-size: 0.875rem; font-weight: 600;">
+        🚨 结果：节点连接超时 / Ping 报 -1ms / 无法上网
+      </div>
+    </div>
+    <!-- 情况 B -->
+    <div style="background: #fff; border: 1px solid #bbf7d0; border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <span style="background: #10b981; color: #fff; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;">情况 B</span>
+          <strong style="color: #065f46; font-size: 1rem;">升级至 2026 最新客户端</strong>
+        </div>
+        <p style="color: #64748b; font-size: 0.85rem; margin: 0 0 1rem 0;">官方 Jamjams、v2rayN 7.23.4+、新版 Xray</p>
+        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.9rem; color: #475569; display: flex; flex-direction: column; gap: 0.6rem;">
+          <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+            <span style="color: #10b981;">✅</span>
+            <span>原生支持 Xray Reality 握手机制</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+            <span style="color: #10b981;">✅</span>
+            <span>自动同步 PublicKey 与 ShortID 密钥</span>
+          </li>
+          <li style="display: flex; align-items: flex-start; gap: 0.5rem;">
+            <span style="color: #10b981;">✅</span>
+            <span>毫秒级建立安全拟真通信链路</span>
+          </li>
+        </ul>
+      </div>
+      <div style="margin-top: 1.25rem; padding: 0.75rem; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #10b981; color: #15803d; font-size: 0.875rem; font-weight: 600;">
+        🚀 结果：节点连接秒通、更稳更快、抗封锁提升
+      </div>
+    </div>
+  </div>
+</div>
+<h3 id="1-vless-reality-协议的底层工作机制与老内核断代">1. VLESS-Reality 协议的底层工作机制与老内核断代</h3>
+<ul>
+<li><strong>传统 VMess/SS 协议</strong>：依赖预共享密钥或自定义证书进行通信。老版客户端通过固定的加密算法握手。</li>
+<li><strong>现代 VLESS-Reality 协议</strong>：Reality 属于 Xray 体系的核心技术。它<strong>不再依赖自签名的 SSL 证书</strong>，而是直接借用互联网真实大型网站（如苹果等）的真实 TLS 证书与 SNI 域名进行拟真的握手，消除证书特征。</li>
+<li><strong>老内核的致命问题</strong>：早期版本的客户端的底层核心根本没有实现 Reality 握手规范。当它们向升级后的 s3/s4 节点发起连接时，服务端会因为无法完成 Reality 密钥交换而<strong>直接断开连接</strong>。</li>
+</ul>
+<h3 id="2-静态配置与旧订阅失效">2. 静态配置与旧订阅失效</h3>
+<p>部分用户在早期使用的是“手动单节点导入”或旧版订阅链接。如果后台节点协议已经由服务端变更为 VLESS，本地保存的旧 VMess 节点参数便成了“空指令”，导致无法发送任何有效请求。</p>
+<h2 id="官方推荐的-2-套方案">官方推荐的 2 套方案</h2>
+<p>针对这次 8 月更新，JMS 官方与技术团队给出了明确的适配指引。你可以根据自己的使用习惯选择以下方案之一：</p>
+<h3 id="方案-a小白首选零折腾换用官方专属-jamjams-客户端">方案 A（小白首选·零折腾）：换用官方专属 Jamjams 客户端</h3>
+<p>如果你不想手动折腾各种内核升级、参数调试与分流规则，使用 JMS 官方出品的 <strong>Jamjams 客户端</strong> 是最省心、最快捷的解决路径。</p>
+<ul>
+<li><strong>官方下载主页</strong>：<a href="https://jamjamsapp.com/">https://jamjamsapp.com/</a></li>
+<li><strong>支持平台</strong>：Windows / macOS / Android / iOS</li>
+</ul>
+<h4 id="为什么优先推荐-jamjams">为什么优先推荐 Jamjams？</h4>
+<ol>
+<li><strong>官方原生适配</strong>：Jamjams 在本次 8 月升级中第一时间同步更新，已原生内置了针对 s3、s4、s5、s801 节点的完整 VLESS-Reality 解析引擎。</li>
+<li><strong>免除手动配置烦恼</strong>：无需手动填写 UUID、PublicKey、ShortID 等复杂参数。只需在 Jamjams 中输入你的 JMS 订阅链接或登录账号，客户端会自动拉取最新协议并完成配置。</li>
+<li><strong>静默无感维护</strong>：后续若官方再次调整节点端口或协议，Jamjams 会在后台自动完成更新。</li>
+</ol>
+<h3 id="方案-bwindows-进阶用户升级-v2rayn-至-7234-版本">方案 B（Windows 进阶用户）：升级 v2rayN 至 7.23.4+ 版本</h3>
+<p>如果你习惯了使用强大的开源客户端 <strong>v2rayN</strong>，必须按照官方通告要求，将其更新至 <strong>7.23.4</strong> 或更高版本。</p>
+<h4 id="第一步下载包含最新-xray-内核的完整安装包">第一步：下载包含最新 Xray 内核的完整安装包</h4>
+<ol>
+<li>访问 v2rayN 官方 GitHub Release 发布页：<a href="https://github.com/2dust/v2rayN/releases/tag/7.23.4">https://github.com/2dust/v2rayN/releases/tag/7.23.4</a></li>
+<li><strong>下载核心要点</strong>：请务必下载带内核的完整压缩包 <strong><code>v2rayN-With-Core.zip</code></strong>（或 64 位独立版本），不要下载仅几 MB 的更新补丁包，以确保内置的 <code>xray.exe</code> 支持最新的 Reality 握手。</li>
+</ol>
+<h4 id="第二步覆盖升级或全新解压配置">第二步：覆盖升级或全新解压配置</h4>
+<ol>
+<li>解压下载的压缩包到电脑目录（建议新建一个独立的纯英文路径文件夹）。</li>
+<li>启动 <code>v2rayN.exe</code>。</li>
+</ol>
+<h4 id="第三步重新拉取与刷新-jms-订阅链接">第三步：重新拉取与刷新 JMS 订阅链接</h4>
+<ol>
+<li>登录 <a href="aff://base">Just My Socks 官网会员中心</a>，在 <strong>My Services</strong> 中找到你的套餐，复制最新的 <strong>Subscription URL（订阅链接）</strong>。</li>
+<li>打开 v2rayN，点击顶部菜单 <strong>订阅分组</strong> → <strong>订阅分组设置</strong>。</li>
+<li>确保订阅地址 URL 正确，点击 <strong>确定</strong> 保存。</li>
+<li>点击顶部菜单 <strong>订阅分组</strong> → <strong>更新订阅（不含订阅转换）</strong>。</li>
+</ol>
+<div style="background: rgba(34, 197, 94, 0.05); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;">
+  <strong style="color: #15803d; font-size: 1rem; display: block; margin-bottom: 0.5rem;">💡 升级成功判定标准：</strong>
+  <p style="margin: 0; color: #166534; font-size: 0.95rem; line-height: 1.6;">
+    更新订阅后，观察节点列表：<strong>s3、s4、s5</strong> 节点的协议类型列应显示为 <code>vless</code>（传输协议为 <code>tcp/reality</code>）。选中 s4 节点按下 <code>Ctrl + R</code> 进行真连接延迟测试，若能正常返回几毫秒到几十毫秒的延迟数值，说明已经完美恢复！
+  </p>
+</div>
+<h3 id="方案-c移动端与-macos-用户迁移指引">方案 C（移动端与 macOS 用户迁移指引）</h3>
+<p>对于使用手机或 Mac 的用户，请参照以下客户端更新指引：</p>
+<ol>
+<li><strong>iOS / iPadOS (Shadowrocket 小火箭)</strong>：
+<ul>
+<li>前往 App Store 检查小火箭是否为最新版本（建议版本 ≥ 2.2.35）。</li>
+<li>打开 Shadowrocket，在主界面手指向下滑动刷新订阅，或点击已配置订阅右侧的 ℹ️ 图标重新拉取。小火箭最新版已原生支持 VLESS-Reality 节点解析。</li>
+</ul>
+</li>
+<li><strong>Android (v2rayNG / Sing-box)</strong>：
+<ul>
+<li>请前往 <a href="https://github.com/2dust/v2rayNG/releases">v2rayNG GitHub Releases</a> 确认版本升级到 1.8.x 以上。</li>
+<li>打开 App 点击右上角三点菜单，选择 <strong>更新订阅</strong> 即可自动识别新协议。</li>
+</ul>
+</li>
+<li><strong>macOS (Clash Verge Rev / Sing-box / Jamjams)</strong>：
+<ul>
+<li>强烈建议 Mac 用户直接安装 macOS 版 <a href="https://jamjamsapp.com/">Jamjams</a>。</li>
+<li>若使用开源客户端，请选用基于最新 Mihomo 或 Xray 内核的现代 GUI 工具（如 Clash Verge Rev），避免使用已经停止维护数年的老版 ClashX。</li>
+</ul>
+</li>
+</ol>
+<h2 id="常见问题解答faq">常见问题解答（FAQ）</h2>
+<h3 id="q1为什么我更新了订阅节点也变成了-vless但测速依然--1ms">Q1：为什么我更新了订阅，节点也变成了 VLESS，但测速依然 -1ms？</h3>
+<p>这通常是由于<strong>本地电脑系统时间不准确</strong>导致的。</p>
+<p>VLESS/Reality 对系统时间有严苛的校验机制。如果你的电脑或手机系统时间与国际标准时间偏差超过 <strong>90 秒</strong>，服务器会自动判定握手握包过期并直接拒连。</p>
+<p>只需要在 Windows 设置中进入 “日期和时间” 的 <strong>立即同步（Sync now）</strong>，确保时钟精准。</p>
+<h3 id="q2我只想用原先的-shadowsocks-协议还能用吗">Q2：我只想用原先的 Shadowsocks 协议，还能用吗？</h3>
+<p><strong>可以</strong>。本次更新官方特意保留了 <strong>s1 和 s2 节点</strong> 的 Shadowsocks 协议支持，以保障极度老旧设备（如部分旧款路由器固件、电视盒子）的向下兼容性。</p>
+<p>如果你临时无法升级客户端软件，可以先手动切换并绑定连接 <strong>s1 或 s2 节点</strong> 应急。</p>
+<h3 id="q3升级为-vless-reality-后对日常使用有什么实际好处">Q3：升级为 VLESS Reality 后，对日常使用有什么实际好处？</h3>
+<ol>
+<li><strong>抗封锁能力质变</strong>：Reality 协议消除了传统 TLS 的证书特征，使流量完全看起来像正常的境外大厂 HTTPS 访问，极大降低了在特殊时期被主动探测识别的概率。</li>
+<li><strong>连接握手更迅速</strong>：配合优质直连骨干网，建连延迟更低，4K 视频加载与海外 API 响应更加流畅。</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>Just My Socks 在 2026 年对 s3、s4、s5、s801 节点的 VLESS Reality 升级，标志着其底层技术架构迈向了新一代标准。虽然对老用户造成了一次性的影响，但在网络环境下更稳定了。</p>
+<p>遇到连接故障的朋友无需慌张，只需按照本文指引下载 <strong><a href="https://jamjamsapp.com/">Jamjams 官方客户端</a></strong> 或升级 <strong><a href="https://github.com/2dust/v2rayN/releases/tag/7.23.4">v2rayN 7.23.4</a></strong> 并刷新订阅，即可满血恢复极速网络体验！</p>
+<blockquote>
+<p>💡 <strong>新购或续费提醒</strong>：需要新开或增购套餐的用户，结账时可继续使用终身循环折扣码 <strong><code>JMS9272283</code></strong> 享受 5.2% 永久优惠。<a href="aff://base">立即前往 Just My Socks 官网查看全系套餐 →</a></p>
+</blockquote> </article> <div class="back" data-astro-cid-gysqo7gh> <a href="/posts" data-astro-cid-gysqo7gh><span data-astro-cid-gysqo7gh>&larr;</span> 资源中心</a> <a href="/products" data-astro-cid-gysqo7gh>极速挑选方案 <span data-astro-cid-gysqo7gh>&rarr;</span></a> </div> </div> </div> </body></html>
