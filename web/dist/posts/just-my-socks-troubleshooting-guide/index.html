@@ -1,0 +1,483 @@
+<!DOCTYPE html><html lang="zh" data-astro-cid-gysqo7gh> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Just My Socks 无法连接排查流程！快速诊断与解决指南</title><meta name="description" content="Just My Socks 节点连不上、连接超时或更新订阅失败怎么办？本文提供 2026 最新 JMS 无法连接 7 步全流程排查指南：涵盖账户状态与流量核实、客户端选型与 VLESS Reality 升级避坑、订阅链接更新、TUN 模式与系统代理配置、安全软件拦截、s1~s5 节点特性切换及 DNS 污染与工单支持，助你 5 分钟快速恢复顺畅网络。"><script type="module">const l={siteName:"JMS 优选官",affiliateBaseUrl:"https://justmysocks6.net/members/aff.php",affiliateId:"36542",getAffiliateLink(t){return!t||t==="base"?`${this.affiliateBaseUrl}?aff=${this.affiliateId}`:`${this.affiliateBaseUrl}?aff=${this.affiliateId}&pid=${t}`},mirrors:[{domain:"justmysocks.net",label:"官方网站",note:"官方原始域名，访问可能需要代理",isOfficial:!0,isCurrent:!1},{domain:"justmysocks1.net",label:"镜像站 #1",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks2.net",label:"镜像站 #2",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks3.net",label:"镜像站 #3",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks5.net",label:"镜像站 #4",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks6.net",label:"镜像站 #5",note:"当前整站默认推广域名，国内稳定可访问",isOfficial:!1,isCurrent:!0}],getMirrorLink(t,s){const i=`https://${t}/members/aff.php`;return s?`${i}?aff=${this.affiliateId}&pid=${s}`:`${i}?aff=${this.affiliateId}`},brands:{"Just My Socks":{couponPath:"/coupons/just-my-socks",tutorialPath:"/posts/how-to-use-just-my-socks-coupon",couponLabel:"领券立省 5.2%",tutorialLabel:"新手图文入门指南"}},getBrandResource(t){const s=t||"Just My Socks";return this.brands[s]||this.brands["Just My Socks"]}};document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll('a[href^="aff://"]').forEach(e=>{const o=e.getAttribute("href")?.replace("aff://","");if(o){const r=l.getAffiliateLink(o);e.setAttribute("href",r),e.setAttribute("target","_blank"),e.setAttribute("rel","noopener noreferrer")}});const s=document.getElementById("progress-bar");window.addEventListener("scroll",()=>{const e=document.body.scrollTop||document.documentElement.scrollTop,o=document.documentElement.scrollHeight-document.documentElement.clientHeight,r=e/o*100;s&&(s.style.width=r+"%")});const i={root:null,rootMargin:"-80px 0px -60% 0px",threshold:0},a=new IntersectionObserver(e=>{e.forEach(o=>{if(o.isIntersecting){const r=o.target.getAttribute("id");document.querySelectorAll(".toc-item a").forEach(n=>{n.classList.toggle("active",n.getAttribute("href")===`#${r}`)})}})},i);document.querySelectorAll(".prose h2").forEach(e=>a.observe(e))});</script><style>.navbar[data-astro-cid-5blmo7yk]{background:#0f172af2;backdrop-filter:blur(12px);border-bottom:1px solid rgba(51,65,85,.6);position:sticky;top:0;z-index:100}.nav-inner[data-astro-cid-5blmo7yk]{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:2rem;height:60px}.logo[data-astro-cid-5blmo7yk]{display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0}.logo-icon[data-astro-cid-5blmo7yk]{font-size:1.3rem}.logo-text[data-astro-cid-5blmo7yk]{font-weight:800;font-size:1.1rem;color:#f1f5f9;letter-spacing:-.5px}.nav-links[data-astro-cid-5blmo7yk]{display:flex;list-style:none;margin:0;padding:0;gap:.25rem;flex:1}.nav-link[data-astro-cid-5blmo7yk]{display:block;padding:.4rem .75rem;border-radius:6px;color:#94a3b8;text-decoration:none;font-size:.9rem;font-weight:500;transition:all .15s;white-space:nowrap}.nav-link[data-astro-cid-5blmo7yk]:hover{color:#f1f5f9;background:#ffffff0f}.nav-link[data-astro-cid-5blmo7yk].active{color:#60a5fa;background:#3b82f61f}.nav-cta[data-astro-cid-5blmo7yk]{display:inline-block;padding:.45rem 1rem;background:#7c3aed33;border:1px solid rgba(167,139,250,.4);color:#c4b5fd;font-weight:700;font-size:.85rem;border-radius:8px;text-decoration:none;white-space:nowrap;transition:all .15s;flex-shrink:0}.nav-cta[data-astro-cid-5blmo7yk]:hover{background:#7c3aed59;color:#ddd6fe}.nav-cta-mirror[data-astro-cid-5blmo7yk]{background:#06b6d426;border-color:#22d3ee59;color:#67e8f9}.nav-cta-mirror[data-astro-cid-5blmo7yk]:hover{background:#06b6d44d;color:#a5f3fc}@media(max-width:640px){.nav-links[data-astro-cid-5blmo7yk]{gap:0}.nav-link[data-astro-cid-5blmo7yk]{padding:.4rem .5rem;font-size:.82rem}.nav-cta[data-astro-cid-5blmo7yk]{display:none}}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.D0H7fLRO.css"></head> <body data-astro-cid-gysqo7gh> <div class="progress-wrap" data-astro-cid-gysqo7gh><div id="progress-bar" data-astro-cid-gysqo7gh></div></div> <nav class="navbar" data-astro-cid-5blmo7yk> <div class="nav-inner" data-astro-cid-5blmo7yk> <!-- Logo --> <a href="/" class="logo" data-astro-cid-5blmo7yk> <span class="logo-icon" data-astro-cid-5blmo7yk>⚡</span> <span class="logo-text" data-astro-cid-5blmo7yk>JMS 优选官</span> </a> <!-- 链接 --> <ul class="nav-links" data-astro-cid-5blmo7yk> <li data-astro-cid-5blmo7yk> <a href="/" class="nav-link " data-astro-cid-5blmo7yk> 首页 </a> </li><li data-astro-cid-5blmo7yk> <a href="/products" class="nav-link " data-astro-cid-5blmo7yk> 套餐列表 </a> </li><li data-astro-cid-5blmo7yk> <a href="/scenarios" class="nav-link " data-astro-cid-5blmo7yk> 场景推荐 </a> </li><li data-astro-cid-5blmo7yk> <a href="/coupons" class="nav-link " data-astro-cid-5blmo7yk> 优惠码 </a> </li><li data-astro-cid-5blmo7yk> <a href="/posts" class="nav-link active" data-astro-cid-5blmo7yk> 教程 </a> </li> </ul> <!-- CTA --> <a href="/mirrors" class="nav-cta nav-cta-mirror" data-astro-cid-5blmo7yk>
+🌐 官网地址
+</a> <a href="/coupons/just-my-socks" class="nav-cta" data-astro-cid-5blmo7yk>
+🎟️ 领优惠码
+</a> </div> </nav>  <div class="hero" data-astro-cid-gysqo7gh> <div class="badge" data-astro-cid-gysqo7gh>教程</div> <h1 data-astro-cid-gysqo7gh>Just My Socks 无法连接排查流程！快速诊断与解决指南</h1> <div class="meta" data-astro-cid-gysqo7gh>最后更新于 2026-08-31</div> </div> <div class="main-layout" data-astro-cid-gysqo7gh> <!-- ToC Sidebar --> <aside class="sidebar" data-astro-cid-gysqo7gh> <div class="toc-title" data-astro-cid-gysqo7gh>本文目录</div> <ul class="toc-list" data-astro-cid-gysqo7gh> <li class="toc-item" data-astro-cid-gysqo7gh> <a href="#-30-秒排查思维导图" data-astro-cid-gysqo7gh>⚡ 30 秒排查思维导图</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#第一步核对服务开通状态与套餐流量确保有效可用" data-astro-cid-gysqo7gh>第一步：核对服务开通状态与套餐流量（确保有效可用）</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#第二步客户端选型与核心升级杜绝协议不匹配" data-astro-cid-gysqo7gh>第二步：客户端选型与核心升级（杜绝协议不匹配）</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#第三步重新拉取并更新订阅链接获取最新活跃-ip" data-astro-cid-gysqo7gh>第三步：重新拉取并更新订阅链接（获取最新活跃 IP）</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#第四步检查代理模式与开启-tun-虚拟网卡" data-astro-cid-gysqo7gh>第四步：检查代理模式与开启 TUN 虚拟网卡</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#第五步本地安全软件与系统防火墙拦截排查" data-astro-cid-gysqo7gh>第五步：本地安全软件与系统防火墙拦截排查</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#第六步节点线路特性切换与精准分流s1--s5-详解" data-astro-cid-gysqo7gh>第六步：节点线路特性切换与精准分流（s1 ~ s5 详解）</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#第七步dns-污染清理与官方工单支持终极兜底保障" data-astro-cid-gysqo7gh>第七步：DNS 污染清理与官方工单支持（终极兜底保障）</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#常见问题解答faq" data-astro-cid-gysqo7gh>常见问题解答（FAQ）</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#总结与行动建议" data-astro-cid-gysqo7gh>总结与行动建议</a> </li> </ul> </aside> <div class="content-wrap" data-astro-cid-gysqo7gh> <article class="prose" data-astro-cid-gysqo7gh> <p>在使用 <a href="aff://base">Just My Socks</a>（简称 JMS），很多朋友可能遇到过：昨天还能顺畅访问网络，今天打开电脑突然发现所有节点连接超时、测速报 <code>-1ms</code>、或者网页持续转圈打不开。</p>
+<p>遇到连不上的情况时，绝大多数人的第一反应是“服务器是不是被封了”或者“服务商宕机了”。</p>
+<p>但在实际运维和社区支持统计中，<strong>超过 85% 的无法连接问题并非服务端故障，而是集中在：本地客户端内核过旧（未适配 2026 最新的 VLESS-Reality 协议）、订阅链接未拉取最新 IP、Windows 系统代理未真正生效、TUN 虚拟网卡未开启、或者电脑系统时钟存在误差。</strong></p>
+<p>为了帮你用最快速度恢复网络，本文整理了一套严密、系统化的 <strong>Just My Socks 7 步极速排查与解决全流程</strong>。只需按顺序逐一核对，5 分钟内即可精准定位并解决绝大多数连接异常！</p>
+<hr>
+<h2 id="-30-秒排查思维导图">⚡ 30 秒排查思维导图</h2>
+<div style="background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%); border-radius: 16px; padding: 1.75rem; color: #f8fafc; margin: 2rem 0; border: 1px solid rgba(59, 130, 246, 0.2); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);">
+  <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="background: #ef4444; color: white; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; text-transform: uppercase;">故障定位</span>
+      <h4 style="margin: 0; color: #f8fafc; font-size: 1.15rem; font-weight: 700;">JMS 连不上 7 步极速诊断决策流</h4>
+    </div>
+    <span style="font-size: 0.85rem; color: #94a3b8;">🎯 从左到右 · 逐层排除</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+    <!-- 诊断 1 -->
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+          <span style="background: #3b82f6; color: white; font-size: 0.75rem; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">1</span>
+          <strong style="color: #60a5fa; font-size: 0.92rem;">官网后台状态检查</strong>
+        </div>
+        <p style="margin: 0; font-size: 0.84rem; color: #cbd5e1; line-height: 1.5;">服务是否处于 Active？当月流量是否 100% 熔断？账单是否逾期？</p>
+      </div>
+      <div style="margin-top: 0.75rem; background: rgba(59,130,246,0.15); border-left: 3px solid #3b82f6; padding: 0.35rem 0.5rem; border-radius: 4px; font-size: 0.78rem; color: #93c5fd;">
+        👉 未买/过期先续费，已激活进入下一步
+      </div>
+    </div>
+    <!-- 诊断 2 -->
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+          <span style="background: #3b82f6; color: white; font-size: 0.75rem; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">2</span>
+          <strong style="color: #60a5fa; font-size: 0.92rem;">客户端与协议匹配</strong>
+        </div>
+        <p style="margin: 0; font-size: 0.84rem; color: #cbd5e1; line-height: 1.5;">客户端是否支持 <strong>VLESS-Reality</strong> 协议？（s3/s4/s5 节点升级后老旧客户端会全线超时）</p>
+      </div>
+      <div style="margin-top: 0.75rem; background: rgba(245,158,11,0.15); border-left: 3px solid #f59e0b; padding: 0.35rem 0.5rem; border-radius: 4px; font-size: 0.78rem; color: #fcd34d;">
+        👉 换用 Jamjams 或升级 v2rayN 7.23.4+
+      </div>
+    </div>
+    <!-- 诊断 3 -->
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+          <span style="background: #3b82f6; color: white; font-size: 0.75rem; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">3</span>
+          <strong style="color: #60a5fa; font-size: 0.92rem;">订阅链接刷新同步</strong>
+        </div>
+        <p style="margin: 0; font-size: 0.84rem; color: #cbd5e1; line-height: 1.5;">是否拉取了 JMS 后台最新的 Subscription 订阅？（旧单节点保存的旧 IP 可能已被阻断）</p>
+      </div>
+      <div style="margin-top: 0.75rem; background: rgba(16,185,129,0.15); border-left: 3px solid #10b981; padding: 0.35rem 0.5rem; border-radius: 4px; font-size: 0.78rem; color: #6ee7b7;">
+        👉 复制最新订阅 URL 重新更新分组
+      </div>
+    </div>
+    <!-- 诊断 4 -->
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+          <span style="background: #3b82f6; color: white; font-size: 0.75rem; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">4</span>
+          <strong style="color: #60a5fa; font-size: 0.92rem;">代理模式与系统时钟</strong>
+        </div>
+        <p style="margin: 0; font-size: 0.84rem; color: #cbd5e1; line-height: 1.5;">系统代理是否已开启为红色？电脑时间偏差是否超过 90 秒？部分软件是否绕过系统代理？</p>
+      </div>
+      <div style="margin-top: 0.75rem; background: rgba(59,130,246,0.15); border-left: 3px solid #3b82f6; padding: 0.35rem 0.5rem; border-radius: 4px; font-size: 0.78rem; color: #93c5fd;">
+        👉 点击时钟“立即同步”并开启 TUN 虚拟网卡
+      </div>
+    </div>
+    <!-- 诊断 5 -->
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+          <span style="background: #3b82f6; color: white; font-size: 0.75rem; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">5</span>
+          <strong style="color: #60a5fa; font-size: 0.92rem;">杀毒软件与防火墙</strong>
+        </div>
+        <p style="margin: 0; font-size: 0.84rem; color: #cbd5e1; line-height: 1.5;">杀软或 Windows Defender 是否误隔离了 <code>xray.exe</code> 内核？10808 端口是否冲突？</p>
+      </div>
+      <div style="margin-top: 0.75rem; background: rgba(239,68,68,0.15); border-left: 3px solid #ef4444; padding: 0.35rem 0.5rem; border-radius: 4px; font-size: 0.78rem; color: #fca5a5;">
+        👉 将客户端文件夹加入杀毒软件白名单
+      </div>
+    </div>
+    <!-- 诊断 6 & 7 -->
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem;">
+          <span style="background: #10b981; color: white; font-size: 0.75rem; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">6-7</span>
+          <strong style="color: #34d399; font-size: 0.92rem;">切换节点 / DNS / 官方工单</strong>
+        </div>
+        <p style="margin: 0; font-size: 0.84rem; color: #cbd5e1; line-height: 1.5;">切换 s4 主力线 / s3 电信线 / s1 兼容线；清理 DNS 缓存；提交官方 Ticket 客服支持。</p>
+      </div>
+      <div style="margin-top: 0.75rem; background: rgba(16,185,129,0.15); border-left: 3px solid #10b981; padding: 0.35rem 0.5rem; border-radius: 4px; font-size: 0.78rem; color: #6ee7b7;">
+        👉 7 天无理由退款保障，售后无忧
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+<h2 id="第一步核对服务开通状态与套餐流量确保有效可用">第一步：核对服务开通状态与套餐流量（确保有效可用）</h2>
+<p>任何网络排查的底层起点，都是确认你的服务处于**正常激活（Active）**状态。</p>
+<div style="background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%); border-radius: 16px; padding: 1.75rem; color: #f8fafc; margin: 2rem 0; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);">
+  <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+      <span style="background: #3b82f6; color: white; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; text-transform: uppercase;">第一步诊断</span>
+      <h4 style="margin: 0; color: #f8fafc; font-size: 1.15rem; font-weight: 700;">服务有效性与账单流量核实</h4>
+    </div>
+    <span style="font-size: 0.85rem; color: #94a3b8;">耗时：30 秒</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.1rem;">
+      <strong style="color: #60a5fa; font-size: 0.95rem; display: block; margin-bottom: 0.5rem;">1. 检查 Status（服务状态）</strong>
+      <p style="margin: 0; font-size: 0.88rem; color: #cbd5e1; line-height: 1.6;">登录 JMS 会员中心，查看服务状态是否为 <span style="color: #34d399; font-weight: 700;">Active</span>。若显示 <span style="color: #f87171; font-weight: 700;">Suspended</span>，说明账单逾期未续费，需补缴账单。</p>
+    </div>
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.1rem;">
+      <strong style="color: #60a5fa; font-size: 0.95rem; display: block; margin-bottom: 0.5rem;">2. 检查 Data Transfer（流量配额）</strong>
+      <p style="margin: 0; font-size: 0.88rem; color: #cbd5e1; line-height: 1.6;">核对当月流量是否已达到 100%。流量耗尽后所有节点会自动熔断停止响应，直至下一个账单周期重置。</p>
+    </div>
+  </div>
+</div>
+<h3 id="1-已购用户排查流程">1. 已购用户排查流程：</h3>
+<ol>
+<li>打开并登录 <a href="aff://base">Just My Socks 官网会员中心</a>。</li>
+<li>点击顶部导航栏 <strong>Services</strong> → <strong>My Services</strong>，找到你正在使用的套餐方案。</li>
+<li><strong>核对状态（Status）</strong>：正常状态必须为绿色的 <code>Active</code>。如果显示 <code>Suspended</code> 或 <code>Terminated</code>，请前往 <strong>Billing</strong> → <strong>My Invoices</strong> 查看是否存在未支付的续费账单。</li>
+<li><strong>核对流量统计（Monthly data transfer counter）</strong>：例如显示 <code>500 GB / 500 GB (100%)</code>，说明本月流量已被用满。此时可以在套餐详情页点击升级至更高规格套餐（如从 LA 500 升级至 LA 1000），或等待次月账单日自动重置。</li>
+</ol>
+<h3 id="2-尚未购买的新用户引导">2. 尚未购买的新用户引导：</h3>
+<p>如果你尚未拥有 Just My Socks 服务，或者旧服务到期需要重新开通，建议直接在官网挑选目前稳定性最高的主流方案：</p>
+<ul>
+<li><strong>性价比之选</strong>：<a href="aff://2">Just My Socks LA 500</a> —— 月付 $5.25，提供 500GB 高速 CN2 GIA/VLESS 流量，适合个人日常科研与办公。</li>
+<li><strong>主力全能款</strong>：<a href="aff://3">Just My Socks LA 1000</a> —— 月付 $9.90，提供 1000GB 流量，不限同时在线设备数，适合团队与重度视频用户。</li>
+</ul>
+<blockquote>
+<p>💡 <strong>优惠提醒</strong>：在结账页面输入官方终身循环折扣码 <strong><code>JMS9272283</code></strong>，可立享 <strong>5.2% 终身减免</strong>（续费永久有效）。<a href="aff://base">立即前往 Just My Socks 官网选购 →</a></p>
+</blockquote>
+<hr>
+<h2 id="第二步客户端选型与核心升级杜绝协议不匹配">第二步：客户端选型与核心升级（杜绝协议不匹配）</h2>
+<p>这是导致 2026 年用户节点“突然全线超时”<strong>最普遍的核心原因</strong>！</p>
+<h3 id="️-重大技术背景2026-年节点全面升级-vless-reality">⚠️ 重大技术背景：2026 年节点全面升级 VLESS-Reality</h3>
+<p>官方已对底层节点进行了重大架构升级：<strong>s3、s4、s5 以及 s801 节点已全面切换为 VLESS + Reality 协议</strong>（仅保留 s1、s2 为传统 Shadowsocks 协议以向下兼容极老旧设备）。</p>
+<ul>
+<li><strong>老旧内核的致命缺陷</strong>：如果你还在使用一两年前下载的旧版客户端（例如老版 v2rayN 5.x/6.x、已停止维护的 ClashX 老内核等），这些客户端<strong>根本没有内置 Xray-Reality 协议的解析能力</strong>。</li>
+<li><strong>典型故障表现</strong>：客户端里的 <code>s1</code>、<code>s2</code> 节点可以正常连通，但速度最快、稳定性最高的 <code>s3</code>、<code>s4</code>、<code>s5</code> 主力节点<strong>全部超时、Ping 测报 -1ms、握手失败（Handshake Failed）</strong>。</li>
+</ul>
+<div style="margin: 2rem 0; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; background: #ffffff; box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);">
+  <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #f8fafc; padding: 1rem 1.5rem; font-weight: 700; font-size: 1.05rem;">
+    📱 各操作系统推荐客户端选型矩阵（2026 最新）
+  </div>
+  <div style="padding: 1.25rem; overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem; text-align: left;">
+      <thead>
+        <tr style="border-bottom: 2px solid #e2e8f0; color: #475569;">
+          <th style="padding: 0.75rem 1rem;">操作系统</th>
+          <th style="padding: 0.75rem 1rem;">首选推荐（小白零折腾）</th>
+          <th style="padding: 0.75rem 1rem;">进阶开源推荐</th>
+          <th style="padding: 0.75rem 1rem;">核心版本要求</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 0.75rem 1rem; font-weight: 600;">🪟 Windows</td>
+          <td style="padding: 0.75rem 1rem;"><strong style="color: #2563eb;">Jamjams</strong>（官方客户端）</td>
+          <td style="padding: 0.75rem 1rem;"><strong>v2rayN</strong> / Clash Verge Rev</td>
+          <td style="padding: 0.75rem 1rem; color: #059669;">v2rayN ≥ 7.23.4（带 Xray Core）</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #f1f5f9; background: #f8fafc;">
+          <td style="padding: 0.75rem 1rem; font-weight: 600;">🍎 macOS</td>
+          <td style="padding: 0.75rem 1rem;"><strong style="color: #2563eb;">Jamjams</strong>（官方客户端）</td>
+          <td style="padding: 0.75rem 1rem;">Clash Verge Rev / Sing-box</td>
+          <td style="padding: 0.75rem 1rem; color: #059669;">支持最新 Reality 扩展协议</td>
+        </tr>
+        <tr style="border-bottom: 1px solid #f1f5f9;">
+          <td style="padding: 0.75rem 1rem; font-weight: 600;">📱 iOS / iPad</td>
+          <td style="padding: 0.75rem 1rem;"><strong style="color: #2563eb;">Jamjams</strong>（官方客户端）</td>
+          <td style="padding: 0.75rem 1rem;"><strong>Shadowrocket</strong>（小火箭）/ Loon</td>
+          <td style="padding: 0.75rem 1rem; color: #059669;">Shadowrocket ≥ 2.2.35</td>
+        </tr>
+        <tr style="background: #f8fafc;">
+          <td style="padding: 0.75rem 1rem; font-weight: 600;">🤖 Android</td>
+          <td style="padding: 0.75rem 1rem;"><strong style="color: #2563eb;">v2rayNG</strong>（开源首选）</td>
+          <td style="padding: 0.75rem 1rem;">Jamjams / Sing-box</td>
+          <td style="padding: 0.75rem 1rem; color: #059669;">v2rayNG ≥ 1.8.x（带 Xray-core）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<h3 id="选型与升级指南">选型与升级指南：</h3>
+<ol>
+<li><strong>不知道怎么选？强烈首选官方 Jamjams 客户端</strong>：
+<ul>
+<li><strong>适用平台</strong>：Windows / macOS / iOS / Android 全平台覆盖。</li>
+<li><strong>官方下载地址</strong>：<a href="https://jamjamsapp.com/">https://jamjamsapp.com/</a></li>
+<li><strong>核心优势</strong>：官方深度定制，<strong>原生集成最新 VLESS-Reality 解析引擎</strong>。你不需要手动折腾复杂的加密参数或内核替换，输入 JMS 订阅链接即可一键自动连接，后续协议调整静默无感更新。</li>
+</ul>
+</li>
+<li><strong>安卓用户首选：v2rayNG</strong>：
+<ul>
+<li>前往 <a href="https://github.com/2dust/v2rayNG/releases">v2rayNG GitHub Releases</a> 下载最新版 APK 安装包。</li>
+<li>v2rayNG 原生内置最新 Xray 核心，完美支持 VLESS-Reality 与 gRPC 传输。</li>
+</ul>
+</li>
+<li><strong>Windows 进阶用户：升级 v2rayN 至 7.23.4 或更高版本</strong>：
+<ul>
+<li>必须访问 <a href="https://github.com/2dust/v2rayN/releases">v2rayN 官方 Release 发布页</a>。</li>
+<li><strong>核心要点</strong>：下载时务必选择带有完整内核的压缩包 <strong><code>v2rayN-With-Core.zip</code></strong>，切勿仅下载不含内核的轻量更新包，否则依然无法完成 Reality 密钥握手。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="第三步重新拉取并更新订阅链接获取最新活跃-ip">第三步：重新拉取并更新订阅链接（获取最新活跃 IP）</h2>
+<p>Just My Socks 相比传统静态 VPS 或普通机场最大的技术护城河，在于其<strong>自动化被墙探测与 IP 智能漂移机制</strong>。</p>
+<p>当某个节点的 IP 在国际出口受到防火墙异常阻断时，JMS 后端集群会自动为该节点更换全新的可用 IP 和通信端口。</p>
+<div style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;">
+  <strong style="color: #b91c1c; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+    <span>🚨</span> 致命误区：客户端本地不会凭空自动更新 IP！
+  </strong>
+  <p style="margin: 0; color: #7f1d1d; font-size: 0.92rem; line-height: 1.6;">
+    很多用户几个月前通过单节点配置导入，或者关闭了客户端的“自动更新订阅”功能。当服务端后台完成换 IP 后，你的客户端依然在向<strong>已经被封禁的旧 IP 发送请求</strong>，自然表现为无法连接。
+  </p>
+</div>
+<h3 id="正确获取并刷新订阅的操作流程">正确获取并刷新订阅的操作流程：</h3>
+<div style="margin: 2rem 0; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; background: #ffffff; box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);">
+  <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: #f8fafc; padding: 1rem 1.5rem; font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; justify-content: space-between;">
+    <span>🔄 订阅链接更新与节点拉取全链路流程</span>
+    <span style="font-size: 0.8rem; background: rgba(59,130,246,0.3); border: 1px solid #3b82f6; color: #93c5fd; padding: 2px 8px; border-radius: 4px;">自动换 IP 闭环</span>
+  </div>
+  <div style="padding: 1.5rem; background: #f8fafc; display: flex; flex-direction: column; gap: 1rem;">
+    <!-- 步骤 1 -->
+    <div style="display: flex; align-items: flex-start; gap: 1rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem;">
+      <div style="background: #3b82f6; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">1</div>
+      <div style="flex: 1;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; flex-wrap: wrap; gap: 0.25rem;">
+          <strong style="color: #0f172a; font-size: 0.95rem;">登录后台并复制专属订阅链接</strong>
+          <span style="font-size: 0.75rem; background: #eff6ff; color: #2563eb; padding: 2px 6px; border-radius: 4px; font-weight: 600;">官网 Client Area</span>
+        </div>
+        <p style="margin: 0; font-size: 0.88rem; color: #64748b; line-height: 1.5;">登录 JMS 会员中心，进入套餐详情页获取专属的 <code>Subscription URL</code>（包含所有节点的最新动态解析与密钥参数）。</p>
+      </div>
+    </div>
+    <!-- 步骤 2 -->
+    <div style="display: flex; align-items: flex-start; gap: 1rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem;">
+      <div style="background: #3b82f6; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">2</div>
+      <div style="flex: 1;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; flex-wrap: wrap; gap: 0.25rem;">
+          <strong style="color: #0f172a; font-size: 0.95rem;">客户端导入并触发“更新订阅”</strong>
+          <span style="font-size: 0.75rem; background: #f0fdf4; color: #16a34a; padding: 2px 6px; border-radius: 4px; font-weight: 600;">本地客户端</span>
+        </div>
+        <p style="margin: 0; font-size: 0.88rem; color: #64748b; line-height: 1.5;">在 Jamjams 或 v2rayN 中粘贴订阅链接，点击“更新订阅”。客户端将向 JMS 接口发起最新的节点信息拉取。</p>
+      </div>
+    </div>
+    <!-- 步骤 3 -->
+    <div style="display: flex; align-items: flex-start; gap: 1rem; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1rem;">
+      <div style="background: #3b82f6; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">3</div>
+      <div style="flex: 1;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; flex-wrap: wrap; gap: 0.25rem;">
+          <strong style="color: #0f172a; font-size: 0.95rem;">服务端返回全新活跃 IP 与 VLESS-Reality 密钥</strong>
+          <span style="font-size: 0.75rem; background: #faf5ff; color: #9333ea; padding: 2px 6px; border-radius: 4px; font-weight: 600;">JMS 节点集群</span>
+        </div>
+        <p style="margin: 0; font-size: 0.88rem; color: #64748b; line-height: 1.5;">服务端自动下发已轮换完毕的健康 IP 地址、最新可用通信端口以及 VLESS-Reality 的 <code>PublicKey</code> 与 <code>ShortID</code>。</p>
+      </div>
+    </div>
+    <!-- 步骤 4 -->
+    <div style="display: flex; align-items: flex-start; gap: 1rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 1rem;">
+      <div style="background: #10b981; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">4</div>
+      <div style="flex: 1;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; flex-wrap: wrap; gap: 0.25rem;">
+          <strong style="color: #065f46; font-size: 0.95rem;">真连接测速通过，成功秒通！</strong>
+          <span style="font-size: 0.75rem; background: #dcfce7; color: #15803d; font-weight: 700; padding: 2px 6px; border-radius: 4px;">恢复正常 ⚡</span>
+        </div>
+        <p style="margin: 0; font-size: 0.88rem; color: #166534; line-height: 1.5;">客户端成功建立加密拟真通道，测速返回正常延迟数值（如 130ms），网络恢复极速连接。</p>
+      </div>
+    </div>
+  </div>
+</div>
+<h3 id="具体配置步骤">具体配置步骤：</h3>
+<ol>
+<li>登录 <a href="aff://base">Just My Socks 会员中心</a>，点击进入你的套餐详情页。</li>
+<li>页面向下滚动，找到 <strong>Subscription</strong> 模块，复制完整的 <strong>Subscription URL</strong>。</li>
+<li>打开本地客户端进行更新：
+<ul>
+<li><strong>Jamjams</strong>：直接粘贴订阅链接或点击账户页面的“刷新同步”按钮。</li>
+<li><strong>v2rayN</strong>：点击顶部菜单 <strong>订阅分组</strong> → <strong>订阅分组设置</strong>，核对 URL 是否准确，然后点击顶部 <strong>订阅分组</strong> → <strong>更新订阅（不含订阅转换）</strong>。</li>
+<li><strong>v2rayNG (Android)</strong>：打开 App，点击右上角三点菜单，选择 <strong>更新订阅</strong>。</li>
+<li><strong>Shadowrocket (iOS)</strong>：在首页配置列表中，手指向下滑动刷新，或进入订阅设置点击手动拉取。</li>
+</ul>
+</li>
+<li><strong>验证节点状态</strong>：
+<ul>
+<li>刷新完成后，检查列表中的 <code>s3</code>、<code>s4</code>、<code>s5</code> 节点的协议列是否已正确显示为 <code>vless</code>。</li>
+<li>全选节点按下快捷键 <code>Ctrl + R</code>（或在手机端点击连通性测试），选择显示具体延迟数值（如 <code>120ms</code> ~ <code>180ms</code>）的<strong>活跃节点</strong>作为当前主路由。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="第四步检查代理模式与开启-tun-虚拟网卡">第四步：检查代理模式与开启 TUN 虚拟网卡</h2>
+<p>客户端配置好了、节点也拉取到了，为什么浏览器依然提示“无法访问此网站”？</p>
+<p>这通常是因为<strong>本地客户端没有正确开启代理服务，或者部分软件绕过了系统代理设置</strong>。</p>
+<div style="background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%); border-radius: 16px; padding: 1.75rem; color: #f8fafc; margin: 2rem 0; border: 1px solid rgba(255,255,255,0.1);">
+  <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;">
+    <span style="background: #10b981; color: white; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 6px;">核心配置</span>
+    <h4 style="margin: 0; color: #f8fafc; font-size: 1.15rem; font-weight: 700;">系统代理模式 vs TUN 虚拟网卡模式</h4>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 1rem;">
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1.1rem;">
+      <strong style="color: #60a5fa; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">普通系统代理（System Proxy）</strong>
+      <p style="margin: 0 0 0.5rem 0; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">仅修改 Windows/macOS 的网络代理注册表，仅接管遵循系统代理的传统浏览器（Chrome/Edge）。</p>
+      <span style="color: #fca5a5; font-size: 0.8rem;">⚠️ 局限：命令行终端、Git、特定桌面客户端、游戏不走代理。</span>
+    </div>
+    <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 1.1rem;">
+      <strong style="color: #34d399; font-size: 0.95rem; display: block; margin-bottom: 0.4rem;">TUN 虚拟网卡模式（强烈推荐 ⭐）</strong>
+      <p style="margin: 0 0 0.5rem 0; font-size: 0.85rem; color: #cbd5e1; line-height: 1.5;">在操作系统底层创建虚拟网络适配器，强制捕获并接管整机所有 TCP/UDP 数据包。</p>
+      <span style="color: #6ee7b7; font-size: 0.8rem;">✅ 优势：彻底解决软件不走代理、DNS 泄露、UDP 转发受阻等顽疾。</span>
+    </div>
+  </div>
+</div>
+<h3 id="1-v2rayn-正确开启系统代理步骤">1. v2rayN 正确开启系统代理步骤：</h3>
+<ul>
+<li>查看电脑右下角任务栏的 v2rayN 图标：
+<ul>
+<li><strong>蓝色 / 灰色图标</strong>：代表系统代理已关闭（处于清除代理状态）。</li>
+<li><strong>红色图标</strong>：代表系统代理已成功启用。</li>
+</ul>
+</li>
+<li>右键任务栏 v2rayN 图标 → 选择 <strong>系统代理</strong> → 点击 <strong>自动配置系统代理</strong>。</li>
+<li>路由设置建议选择 <strong>绕过大陆 (Whitelist / Bypass CN)</strong>，以保证访问百度、淘宝等国内网站直连不卡顿，访问海外资源走 JMS 节点加速。</li>
+</ul>
+<h3 id="2-推荐开启-tun-模式一劳永逸">2. 推荐开启 TUN 模式（一劳永逸）：</h3>
+<ul>
+<li>在 v2rayN 顶部或底部主界面中，找到 <strong>TUN 模式</strong> 开关（部分版本需在“路由设置”或“设置”中勾选启用 TUN）。</li>
+<li>打开 TUN 模式时，系统会弹出 UAC 提权提示，点击 <strong>是（允许）</strong> 即可加载虚拟网卡驱动。</li>
+<li>开启后，整台电脑所有应用（包括各类开发工具、游戏、AI 客户端）均会自动走代理路由，无需逐个配置软件内置代理。</li>
+</ul>
+<h3 id="3-极其关键核对本地系统时间精准度90-秒死穴">3. 极其关键：核对本地系统时间精准度（90 秒死穴）</h3>
+<p>现代前沿加密协议（VLESS / VMess / Reality）在 TLS 握手阶段内置了严格的防重放攻击与时间戳校验机制：</p>
+<ul>
+<li><strong>致命卡点</strong>：如果你的电脑或手机系统时间与国际标准 UTC 时间<strong>误差超过 90 秒</strong>，服务器会自动判定握手数据包为过期攻击包并<strong>直接丢弃</strong>！</li>
+<li><strong>解决步骤（Windows）</strong>：
+<ol>
+<li>按下快捷键 <code>Win + I</code> 打开系统设置 → 进入 <strong>时间和语言</strong> → <strong>日期和时间</strong>。</li>
+<li>确保 <strong>自动设置时间</strong> 与 <strong>自动设置时区</strong> 处于开启状态。</li>
+<li>点击 <strong>立即同步（Sync now）</strong> 按钮，确保时钟精准对齐。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="第五步本地安全软件与系统防火墙拦截排查">第五步：本地安全软件与系统防火墙拦截排查</h2>
+<p>有时候配置完全正确，但点击连接后客户端日志疯狂报错，这往往是本地杀毒防护软件在“暗中使绊”。</p>
+<div style="margin: 2rem 0; border: 1px solid #fed7aa; border-radius: 14px; background: #fffbeb; padding: 1.5rem;">
+  <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem;">
+    <span style="font-size: 1.2rem;">🛡️</span>
+    <strong style="color: #9a3412; font-size: 1.05rem;">杀毒软件误杀排查要点</strong>
+  </div>
+  <p style="margin: 0 0 1rem 0; font-size: 0.92rem; color: #78350f; line-height: 1.6;">
+    Windows Defender、360 安全卫士、火绒安全、迈克菲（McAfee）或卡巴斯基等防护软件，可能会由于启发式扫描机制，误将客户端目录下的核心组件 <code>xray.exe</code>、<code>sing-box.exe</code> 或 <code>v2ray.exe</code> 识别为未知风险程序并自动隔离或拦截网络通信。
+  </p>
+  <div style="background: rgba(255,255,255,0.7); border-radius: 8px; padding: 1rem; font-size: 0.88rem; color: #451a03; line-height: 1.7;">
+    <strong>排查三步法：</strong><br>
+    1. <strong>检查核心文件是否存在</strong>：打开客户端根目录下的 <code>bin/Xray/</code> 或 <code>core/</code> 文件夹，查看 <code>xray.exe</code> 是否还在。若文件消失，说明已被杀软静默隔离。<br>
+    2. <strong>添加信任白名单</strong>：在杀毒软件与 Windows Defender 的“排除项（Exclusions）”中，将整个客户端所在文件夹添加到信任白名单。<br>
+    3. <strong>放行本地监听端口</strong>：确认客户端本地监听的 Socks 端口（默认 <code>10808</code>）和 HTTP 端口（默认 <code>10809</code>）未被其他本地开发服务（如本地代理、IIS 或调试工具）冲突占用。
+  </div>
+</div>
+<hr>
+<h2 id="第六步节点线路特性切换与精准分流s1--s5-详解">第六步：节点线路特性切换与精准分流（s1 ~ s5 详解）</h2>
+<p>Just My Socks 为每个套餐分配了多组独立的服务器节点（<code>s1</code> ~ <code>s5</code> 以及 <code>s801</code>）。遇到某个节点偶发高延迟或连接不畅时，<strong>主动切换到最适合你本地宽带运营商的节点</strong>是快速恢复满速体验的绝招。</p>
+<h3 id="jms-节点线路特性与运营商适配一览">JMS 节点线路特性与运营商适配一览</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">节点编号</th><th align="left">当前协议 (2026 最新)</th><th align="left">底层线路与回程路由特性</th><th align="left">最佳适用场景与推荐人群</th></tr></thead><tbody><tr><td align="left"><strong>s1 / s2</strong></td><td align="left"><strong>Shadowsocks</strong></td><td align="left">传统直连骨干网 / 标准企业路由</td><td align="left">适合老旧系统、旧款路由器固件及协议应急兼容。</td></tr><tr><td align="left"><strong>s3</strong></td><td align="left"><strong>VLESS + Reality</strong></td><td align="left"><strong>中国电信 CN2 GIA 高级优化线路</strong></td><td align="left"><strong>电信宽带用户首选</strong>，晚高峰单线程吞吐极高。</td></tr><tr><td align="left"><strong>s4 (👑 主力)</strong></td><td align="left"><strong>VLESS + Reality</strong></td><td align="left"><strong>三网强制回程 CN2 GIA 顶级企业专线</strong></td><td align="left"><strong>全网综合性能之王</strong>！电信、联通、移动三网速度与抗封锁表现最佳。</td></tr><tr><td align="left"><strong>s5</strong></td><td align="left"><strong>VLESS + Reality</strong></td><td align="left"><strong>CN2 GIA + 联通 AS9929 / CMIN2 多路径智能容灾</strong></td><td align="left">移动与联通宽带表现极佳，晚高峰主力节点拥堵时的备用神线。</td></tr><tr><td align="left"><strong>s801</strong></td><td align="left"><strong>VLESS + Reality</strong></td><td align="left"><strong>超大带宽离岸直连线路（仅计 10% 流量）</strong></td><td align="left"><strong>大流量下载专用</strong>（看 4K/8K 视频、拉大模型权重），消耗 10GB 仅扣 1GB 配额！</td></tr></tbody></table>
+<div style="background: rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 1.25rem; margin: 1.5rem 0;">
+  <strong style="color: #1d4ed8; font-size: 1rem; display: block; margin-bottom: 0.5rem;">💡 节点快速切换实操口诀：</strong>
+  <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.92rem; color: #1e40af; line-height: 1.7;">
+    <li><strong>日常首选</strong>：无脑绑定 <strong>s4 节点</strong>（三网回程 CN2 GIA，无论何时延迟与稳定性都处于顶级水准）。</li>
+    <li><strong>电信宽带</strong>：若 s4 偶发波动，无缝切换至 <strong>s3 节点</strong>。</li>
+    <li><strong>移动 / 联通宽带</strong>：若遇到跨网丢包，优先尝试 <strong>s5 节点</strong>。</li>
+    <li><strong>大文件下载 / 刷剧</strong>：切换至 <strong>s801 节点</strong>，享受十倍流量杠杆（10% 计费）。</li>
+    <li><strong>老设备兼容</strong>：如果使用非常老旧的第三方客户端暂时无法升级内核，先用 <strong>s1 / s2 节点</strong> 应急。</li>
+  </ul>
+</div>
+<hr>
+<h2 id="第七步dns-污染清理与官方工单支持终极兜底保障">第七步：DNS 污染清理与官方工单支持（终极兜底保障）</h2>
+<p>如果完成了前 6 步，节点依然显示连通但部分知名网站提示 <code>DNS_PROBE_FINISHED_NXDOMAIN</code> 或证书报错，说明你遇到了<strong>本地运营商 DNS 污染</strong>。</p>
+<h3 id="1-清理本地-dns-缓存与配置安全-dns">1. 清理本地 DNS 缓存与配置安全 DNS：</h3>
+<ul>
+<li><strong>刷新系统 DNS 缓存</strong>：
+<ul>
+<li>在 Windows 搜索栏输入 <code>cmd</code>，以管理员身份运行命令提示符。</li>
+<li>输入命令：<code>ipconfig /flushdns</code> 并回车，看到“已成功刷新 DNS 解析缓存”提示。</li>
+</ul>
+</li>
+<li><strong>客户端设置安全远程 DNS</strong>：
+<ul>
+<li>在客户端的 DNS 配置中，将 Remote DNS 设置为权威安全 DNS：<code>8.8.8.8</code>（Google DNS）或 <code>1.1.1.1</code>（Cloudflare DNS），并启用 DoH（DNS over HTTPS）加密解析，彻底杜绝本地宽带劫持。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-官方工单support-ticket技术支持">2. 官方工单（Support Ticket）技术支持：</h3>
+<p>如果经过全套排查后仍然存在全网连接异常，可以随时联系 JMS 官方工程师团队协助定位：</p>
+<ol>
+<li>登录 <a href="aff://base">Just My Socks 官网会员中心</a>。</li>
+<li>点击顶部导航栏 <strong>Support</strong> → <strong>Tickets</strong> → <strong>Open Ticket</strong>。</li>
+<li>选择技术支持部门（Technical Support），用简明英文或中文描述你的问题：
+<ul>
+<li>包含你的套餐 Service ID、所在省份与宽带运营商（如 China Telecom / China Unicom）。</li>
+<li>附上客户端测试的报错日志截图。</li>
+</ul>
+</li>
+<li>官方工程师通常会在数小时内完成路由排查与服务器状态核验。</li>
+</ol>
+<h3 id="3-7-天无理由退款保障">3. 7 天无理由退款保障：</h3>
+<p><a href="aff://base">Just My Socks 官方</a> 为所有新购用户提供 <strong>7 天无条件退款保障</strong>。如果你在购买后 7 天内因本地特殊网络环境无法获得满意的连接体验，只需在会员中心提交工单申请退款，款项将在审核后原路退回支付账户，完全没有试错风险。</p>
+<hr>
+<h2 id="常见问题解答faq">常见问题解答（FAQ）</h2>
+<h3 id="q1为什么-v2rayn-测速全部显示--1ms-或-timeout但手机端-jamjams-却能正常使用">Q1：为什么 v2rayN 测速全部显示 -1ms 或 Timeout，但手机端 Jamjams 却能正常使用？</h3>
+<p>这通常是由于 Windows 本地电脑的 <strong>Xray 内核缺失</strong> 或 <strong>系统时间不同步</strong> 引起的。手机端 Jamjams 原生内置了最新的 Reality 引擎且手机时钟通常与基站毫秒级同步；而在电脑端，请检查 v2rayN 是否升级至 7.23.4+ 版本，并在 Windows 设置中点击“立即同步”对准时钟。</p>
+<h3 id="q2提示-socks5-proxy-connection-refused-是怎么回事">Q2：提示 <code>socks5 proxy: connection refused</code> 是怎么回事？</h3>
+<p>这表示你的本地浏览器或系统代理正在尝试连接本地代理端口（如 10808），但客户端主程序并没有真正运行，或者核心进程崩溃退出了。请检查任务管理器中 <code>v2rayN.exe</code> 与 <code>xray.exe</code> 是否在正常运行，并检查杀毒软件是否有拦截日志。</p>
+<h3 id="q3开启代理后国内软件微信百度淘宝打不开了或变慢">Q3：开启代理后，国内软件（微信、百度、淘宝）打不开了或变慢？</h3>
+<p>这是因为客户端代理分流规则设置为了“全局模式（Global）”，导致访问国内网站也强行走海外节点绕了一大圈。只需将客户端的路由模式切换为 <strong>“绕过大陆（Bypass CN）”</strong> 或 <strong>“规则分流（Rule）”</strong> 即可实现国内直连、海外加速的完美分流。</p>
+<h3 id="q4为什么更新订阅时提示-the-remote-name-could-not-be-resolved">Q4：为什么更新订阅时提示 <code>The remote name could not be resolved</code>？</h3>
+<p>这说明本地网络在拉取 JMS 官网订阅域名时遭遇了 DNS 污染或阻断。你可以临时开启手机热点连接电脑重新拉取，或者登录 JMS 官网后台查看最新的备用订阅链接地址。</p>
+<h3 id="q5购买时使用的优惠码后续每个月续费时会自动生效吗">Q5：购买时使用的优惠码，后续每个月续费时会自动生效吗？</h3>
+<p><strong>会</strong>。Just My Socks 的优惠码 <strong><code>JMS9272283</code></strong> 是<strong>终身循环折扣（Lifetime Recurring Discount）</strong>。只要在初次下单结算时填写并验证成功，系统生成的后续每一期续费账单均会自动应用 5.2% 的减免，无需手动重复输入。</p>
+<hr>
+<h2 id="总结与行动建议">总结与行动建议</h2>
+<p>遇到 Just My Socks 无法连接时，无需焦虑，99% 的问题都可以通过以下精简清单在 5 分钟内快速闭环解决：</p>
+<div style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: #f8fafc; border-radius: 16px; padding: 2rem; margin: 2.5rem 0; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);">
+  <h3 style="margin-top: 0; color: #ffffff; font-size: 1.3rem;">📋 5 分钟极速自检清单</h3>
+  <ul style="margin: 1rem 0 1.5rem 0; padding-left: 1.25rem; font-size: 0.95rem; line-height: 1.8; color: #e2e8f0;">
+    <li>✅ <strong>查状态</strong>：登录后台确认 Service 为 Active 且月度流量未超标。</li>
+    <li>✅ <strong>升核心</strong>：Windows 升级至 v2rayN 7.23.4+（或全平台选用官方 Jamjams），全面适配 VLESS Reality。</li>
+    <li>✅ <strong>刷订阅</strong>：重新在会员中心复制 Subscription URL 并更新节点，剔除失效旧 IP。</li>
+    <li>✅ <strong>开 TUN</strong>：开启客户端 TUN 虚拟网卡模式，并在 Windows 设置中点击“立即同步”对准时钟。</li>
+    <li>✅ <strong>切节点</strong>：优先绑定 s4 三网 CN2 GIA 主力节点，电信备选 s3，大流量看视频切换 s801。</li>
+  </ul>
+  <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+    <span style="font-size: 0.9rem; color: #93c5fd;">⚡ 终身循环 5.2% 官方折扣码：<strong style="color: #ffffff; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 4px;">JMS9272283</strong></span>
+    <a href="aff://base" style="background: #3b82f6; color: white; padding: 0.6rem 1.25rem; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.9rem; display: inline-block;">前往官网选购 / 查看套餐 →</a>
+  </div>
+</div> </article> <div class="back" data-astro-cid-gysqo7gh> <a href="/posts" data-astro-cid-gysqo7gh><span data-astro-cid-gysqo7gh>&larr;</span> 资源中心</a> <a href="/products" data-astro-cid-gysqo7gh>极速挑选方案 <span data-astro-cid-gysqo7gh>&rarr;</span></a> </div> </div> </div> </body></html>
