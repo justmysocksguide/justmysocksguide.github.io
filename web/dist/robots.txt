@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://justmysocksguide.github.io/sitemap-index.xml
