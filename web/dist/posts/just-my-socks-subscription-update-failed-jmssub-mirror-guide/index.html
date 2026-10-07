@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="zh" data-astro-cid-gysqo7gh> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Just My Socks 订阅更新失败排查：jmssub 阻断原因与国内镜像替换方案</title><meta name="description" content="Just My Socks 在客户端更新订阅提示连接超时或更新失败怎么办？本文深入分析 jmssub.net 遭遇国内 DNS 污染的根本原因，提供前置代理更新、官方国内镜像订阅替换、&#38;usedomains=1 增强参数以及后台单节点手动导入等实用解决方案，助你快速恢复节点同步。"><link rel="canonical" href="https://justmysocksguide.github.io/posts/just-my-socks-subscription-update-failed-jmssub-mirror-guide/"><!-- Schema.org BlogPosting --><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://justmysocksguide.github.io/#website","url":"https://justmysocksguide.github.io/","name":"JMS 优选官","inLanguage":"zh-CN","publisher":{"@id":"https://justmysocksguide.github.io/#organization"}},{"@type":"Organization","@id":"https://justmysocksguide.github.io/#organization","name":"JMS 优选官","url":"https://justmysocksguide.github.io/"},{"@type":"BreadcrumbList","@id":"https://justmysocksguide.github.io/posts/just-my-socks-subscription-update-failed-jmssub-mirror-guide/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://justmysocksguide.github.io/"},{"@type":"ListItem","position":2,"name":"资源中心","item":"https://justmysocksguide.github.io/posts/"},{"@type":"ListItem","position":3,"name":"Just My Socks 订阅更新失败排查：jmssub 阻断原因与国内镜像替换方案","item":"https://justmysocksguide.github.io/posts/just-my-socks-subscription-update-failed-jmssub-mirror-guide/"}]},{"@type":"BlogPosting","@id":"https://justmysocksguide.github.io/posts/just-my-socks-subscription-update-failed-jmssub-mirror-guide/#article","isPartOf":{"@id":"https://justmysocksguide.github.io/#website"},"headline":"Just My Socks 订阅更新失败排查：jmssub 阻断原因与国内镜像替换方案","description":"Just My Socks 在客户端更新订阅提示连接超时或更新失败怎么办？本文深入分析 jmssub.net 遭遇国内 DNS 污染的根本原因，提供前置代理更新、官方国内镜像订阅替换、&usedomains=1 增强参数以及后台单节点手动导入等实用解决方案，助你快速恢复节点同步。","datePublished":"2026-10-07","dateModified":"2026-10-07","mainEntityOfPage":"https://justmysocksguide.github.io/posts/just-my-socks-subscription-update-failed-jmssub-mirror-guide/","url":"https://justmysocksguide.github.io/posts/just-my-socks-subscription-update-failed-jmssub-mirror-guide/","inLanguage":"zh-CN","publisher":{"@id":"https://justmysocksguide.github.io/#organization"},"breadcrumb":{"@id":"https://justmysocksguide.github.io/posts/just-my-socks-subscription-update-failed-jmssub-mirror-guide/#breadcrumb"}}]}</script><script type="module">const l={siteName:"JMS 优选官",affiliateBaseUrl:"https://justmysocks6.net/members/aff.php",affiliateId:"36542",getAffiliateLink(t){return!t||t==="base"?`${this.affiliateBaseUrl}?aff=${this.affiliateId}`:`${this.affiliateBaseUrl}?aff=${this.affiliateId}&pid=${t}`},mirrors:[{domain:"justmysocks.net",label:"官方网站",note:"官方原始域名，访问可能需要代理",isOfficial:!0,isCurrent:!1},{domain:"justmysocks1.net",label:"镜像站 #1",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks2.net",label:"镜像站 #2",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks3.net",label:"镜像站 #3",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks5.net",label:"镜像站 #4",note:"",isOfficial:!1,isCurrent:!1},{domain:"justmysocks6.net",label:"镜像站 #5",note:"当前整站默认推广域名，国内稳定可访问",isOfficial:!1,isCurrent:!0}],getMirrorLink(t,s){const i=`https://${t}/members/aff.php`;return s?`${i}?aff=${this.affiliateId}&pid=${s}`:`${i}?aff=${this.affiliateId}`},brands:{"Just My Socks":{couponPath:"/coupons/just-my-socks",tutorialPath:"/posts/how-to-use-just-my-socks-coupon",couponLabel:"领券立省 5.2%",tutorialLabel:"新手图文入门指南"}},getBrandResource(t){const s=t||"Just My Socks";return this.brands[s]||this.brands["Just My Socks"]}};document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll('a[href^="aff://"]').forEach(e=>{const o=e.getAttribute("href")?.replace("aff://","");if(o){const r=l.getAffiliateLink(o);e.setAttribute("href",r),e.setAttribute("target","_blank"),e.setAttribute("rel","noopener noreferrer")}});const s=document.getElementById("progress-bar");window.addEventListener("scroll",()=>{const e=document.body.scrollTop||document.documentElement.scrollTop,o=document.documentElement.scrollHeight-document.documentElement.clientHeight,r=e/o*100;s&&(s.style.width=r+"%")});const i={root:null,rootMargin:"-80px 0px -60% 0px",threshold:0},a=new IntersectionObserver(e=>{e.forEach(o=>{if(o.isIntersecting){const r=o.target.getAttribute("id");document.querySelectorAll(".toc-item a").forEach(n=>{n.classList.toggle("active",n.getAttribute("href")===`#${r}`)})}})},i);document.querySelectorAll(".prose h2").forEach(e=>a.observe(e))});</script><style>.navbar[data-astro-cid-5blmo7yk]{background:#0f172af2;backdrop-filter:blur(12px);border-bottom:1px solid rgba(51,65,85,.6);position:sticky;top:0;z-index:100}.nav-inner[data-astro-cid-5blmo7yk]{max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:2rem;height:60px}.logo[data-astro-cid-5blmo7yk]{display:flex;align-items:center;gap:.5rem;text-decoration:none;flex-shrink:0}.logo-icon[data-astro-cid-5blmo7yk]{font-size:1.3rem}.logo-text[data-astro-cid-5blmo7yk]{font-weight:800;font-size:1.1rem;color:#f1f5f9;letter-spacing:-.5px}.nav-links[data-astro-cid-5blmo7yk]{display:flex;list-style:none;margin:0;padding:0;gap:.25rem;flex:1}.nav-link[data-astro-cid-5blmo7yk]{display:block;padding:.4rem .75rem;border-radius:6px;color:#94a3b8;text-decoration:none;font-size:.9rem;font-weight:500;transition:all .15s;white-space:nowrap}.nav-link[data-astro-cid-5blmo7yk]:hover{color:#f1f5f9;background:#ffffff0f}.nav-link[data-astro-cid-5blmo7yk].active{color:#60a5fa;background:#3b82f61f}.nav-cta[data-astro-cid-5blmo7yk]{display:inline-block;padding:.45rem 1rem;background:#7c3aed33;border:1px solid rgba(167,139,250,.4);color:#c4b5fd;font-weight:700;font-size:.85rem;border-radius:8px;text-decoration:none;white-space:nowrap;transition:all .15s;flex-shrink:0}.nav-cta[data-astro-cid-5blmo7yk]:hover{background:#7c3aed59;color:#ddd6fe}.nav-cta-mirror[data-astro-cid-5blmo7yk]{background:#06b6d426;border-color:#22d3ee59;color:#67e8f9}.nav-cta-mirror[data-astro-cid-5blmo7yk]:hover{background:#06b6d44d;color:#a5f3fc}@media(max-width:640px){.nav-links[data-astro-cid-5blmo7yk]{gap:0}.nav-link[data-astro-cid-5blmo7yk]{padding:.4rem .5rem;font-size:.82rem}.nav-cta[data-astro-cid-5blmo7yk]{display:none}}
+</style>
+<link rel="stylesheet" href="/_astro/_slug_.D0H7fLRO.css"></head> <body data-astro-cid-gysqo7gh> <div class="progress-wrap" data-astro-cid-gysqo7gh><div id="progress-bar" data-astro-cid-gysqo7gh></div></div> <nav class="navbar" data-astro-cid-5blmo7yk> <div class="nav-inner" data-astro-cid-5blmo7yk> <!-- Logo --> <a href="/" class="logo" data-astro-cid-5blmo7yk> <span class="logo-icon" data-astro-cid-5blmo7yk>⚡</span> <span class="logo-text" data-astro-cid-5blmo7yk>JMS 优选官</span> </a> <!-- 链接 --> <ul class="nav-links" data-astro-cid-5blmo7yk> <li data-astro-cid-5blmo7yk> <a href="/" class="nav-link " data-astro-cid-5blmo7yk> 首页 </a> </li><li data-astro-cid-5blmo7yk> <a href="/products" class="nav-link " data-astro-cid-5blmo7yk> 套餐列表 </a> </li><li data-astro-cid-5blmo7yk> <a href="/scenarios" class="nav-link " data-astro-cid-5blmo7yk> 场景推荐 </a> </li><li data-astro-cid-5blmo7yk> <a href="/coupons" class="nav-link " data-astro-cid-5blmo7yk> 优惠码 </a> </li><li data-astro-cid-5blmo7yk> <a href="/posts" class="nav-link active" data-astro-cid-5blmo7yk> 教程 </a> </li> </ul> <!-- CTA --> <a href="/mirrors" class="nav-cta nav-cta-mirror" data-astro-cid-5blmo7yk>
+🌐 官网地址
+</a> <a href="/coupons/just-my-socks" class="nav-cta" data-astro-cid-5blmo7yk>
+🎟️ 领优惠码
+</a> </div> </nav>  <div class="hero" data-astro-cid-gysqo7gh> <div class="badge" data-astro-cid-gysqo7gh>教程</div> <h1 data-astro-cid-gysqo7gh>Just My Socks 订阅更新失败排查：jmssub 阻断原因与国内镜像替换方案</h1> <div class="meta" data-astro-cid-gysqo7gh>最后更新于 2026-10-07</div> </div> <div class="main-layout" data-astro-cid-gysqo7gh> <!-- ToC Sidebar --> <aside class="sidebar" data-astro-cid-gysqo7gh> <div class="toc-title" data-astro-cid-gysqo7gh>本文目录</div> <ul class="toc-list" data-astro-cid-gysqo7gh> <li class="toc-item" data-astro-cid-gysqo7gh> <a href="#一-节点能连但订阅更新失败的根源" data-astro-cid-gysqo7gh>一、 节点能连但订阅更新失败的根源</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#二-方案一前置代理与切换网络极速更新" data-astro-cid-gysqo7gh>二、 方案一：前置代理与切换网络极速更新</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#三-方案二替换为官方国内可用镜像订阅" data-astro-cid-gysqo7gh>三、 方案二：替换为官方国内可用镜像订阅</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#四-方案三添加官方域名参数防止节点失效" data-astro-cid-gysqo7gh>四、 方案三：添加官方域名参数防止节点失效</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#五-方案四后台单节点免订阅手动导入保底" data-astro-cid-gysqo7gh>五、 方案四：后台单节点免订阅手动导入保底</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#六-主流客户端常见报错与配置注意事项" data-astro-cid-gysqo7gh>六、 主流客户端常见报错与配置注意事项</a> </li><li class="toc-item" data-astro-cid-gysqo7gh> <a href="#七-常见问题答疑与故障排查快速总结" data-astro-cid-gysqo7gh>七、 常见问题答疑与故障排查快速总结</a> </li> </ul> </aside> <div class="content-wrap" data-astro-cid-gysqo7gh> <article class="prose" data-astro-cid-gysqo7gh> <p>很多使用 <a href="aff://base">Just My Socks</a> 的朋友都会遇到一种令人费解的状况：明明客户端里的节点还能流畅浏览网页，但只要点击“更新订阅”，软件就会立刻弹出连接超时或远程主机强迫关闭连接的报错提示。</p>
+<p>很多新手往往会误以为是服务过期或节点被封。其实节点能正常连通，说明代理加密隧道完全通畅；真正出问题的，是负责向客户端同步最新节点列表的<strong>订阅解析通道</strong>。</p>
+<p>由于 Just My Socks 具备被封 IP 自动更换的核心机制，一旦订阅长期拉取失败，当服务端轮换新 IP 时，客户端就会因未获取新节点而彻底断网。本文将为你深入拆解故障根源，并提供四套经过实测的恢复方案。</p>
+<div style="background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%); border-radius: 16px; padding: 1.75rem; color: #f8fafc; margin: 2rem 0; border: 1px solid rgba(59, 130, 246, 0.2); box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.3);">
+  <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+    <span style="background: #3b82f6; color: white; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 6px;">核心速览</span>
+    <h4 style="margin: 0; color: #f8fafc; font-size: 1.05rem; font-weight: 700;">为什么会出现“节点能连，订阅却更新失败”？</h4>
+  </div>
+  <p style="margin: 0; color: #cbd5e1; font-size: 0.92rem; line-height: 1.7;">
+    代理节点走的是强加密与伪装的专属海外通道；而默认订阅地址 <code>jmssub.net</code> 只是一个普通 HTTPS 网页接口，国内极易遭遇运营商 DNS 投毒或 SNI 握手阻断。<br><br>破解核心在于：绕过直接的本地解析，改用国内可用镜像或开启前置代理拉取。
+  </p>
+</div>
+<h2 id="一-节点能连但订阅更新失败的根源">一、 节点能连但订阅更新失败的根源</h2>
+<p>要彻底解决更新失败的问题，首先需要理清“代理数据流量”与“订阅请求流量”的区别。当你通过节点上网时，客户端会将数据加密打包，经由专属的高速专线出海，具有极强的协议伪装与抗干扰能力。</p>
+<p>但在点击“更新订阅”时，客户端发起的却是一次普通的 HTTPS 直连网页请求，直接访问默认订阅地址 <code>https://jmssub.net/members/getsub.php</code>。下表对比了这两种通信行为在网络环境中的本质区别：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">通信类型</th><th align="left">请求方式</th><th align="left">协议伪装</th><th align="left">国内网络策略</th></tr></thead><tbody><tr><td align="left"><strong>代理节点数据流</strong></td><td align="left">经由加密客户端分流</td><td align="left">强加密与 TLS 伪装</td><td align="left">IP 被阻断时服务端自动轮换</td></tr><tr><td align="left"><strong>订阅更新数据流</strong></td><td align="left">本地网络直连 HTTPS GET</td><td align="left">无伪装（普通明文 SNI）</td><td align="left">极易被运营商 DNS 投毒或 RST 阻断</td></tr></tbody></table>
+<p>从网络层面来看，默认订阅域名 <code>jmssub.net</code> 挂载在 Cloudflare 节点之后。国内部分运营商（尤其是中国移动宽带及部分省份电信）会对该域名执行严格的阻断策略，导致本地直连无法完成 DNS 解析或在 TLS 握手阶段被强行重置。</p>
+<h2 id="二-方案一前置代理与切换网络极速更新">二、 方案一：前置代理与切换网络极速更新</h2>
+<p>如果你的客户端中目前还有至少一个健康节点可以连通，最快捷的解法就是利用现有的代理通道中转更新。很多客户端默认使用本地直连网络拉取订阅，只要将其改为经由代理下载，就能瞬间绕过运营商对订阅域名的拦截。</p>
+<p>操作流程非常直观，主要分为以下两个简要步骤：</p>
+<ul>
+<li><strong>开启客户端的代理模式</strong>：先在节点列表中选择一个当前可用的健康节点并连接，确保浏览器已经能够访问外网。</li>
+<li><strong>在客户端中指定更新代理</strong>：在 v2rayN 中勾选“通过代理更新订阅”选项；若使用 Clash Verge Rev，则可以在设置中确认订阅下载器使用系统代理端口（如 <code>127.0.0.1:7890</code>）。</li>
+</ul>
+<p>完成设置后再次点击更新，订阅请求便会借由海外节点顺利拉取最新的节点配置。此外，如果你有联通或电信的手机热点，将设备临时切换到热点网络下重试，通常也能有效避开移动宽带带来的局部域名污染。</p>
+<h2 id="三-方案二替换为官方国内可用镜像订阅">三、 方案二：替换为官方国内可用镜像订阅</h2>
+<p>当前置代理不可用、或者旧节点已全线断联时，最稳定、最具根治性的方案是将订阅域名替换为官方国内可用镜像站。官方为了保障国内用户的访问，长期维护着一套与主站数据完全同步的镜像集群（如 <code>justmysocks6.net</code>）。</p>
+<p>这些镜像站与主站后端采用同构架构，同样完整部署了负责节点分发的 <code>/members/getsub.php</code> 接口。你只需对后台获取到的订阅链接进行简单的域名替换，转换规则如下：</p>
+<ul>
+<li><strong>原始订阅格式</strong>：<code>https://jmssub.net/members/getsub.php?service=你的服务ID&#x26;id=你的订阅Token</code></li>
+<li><strong>镜像替换格式</strong>：<code>https://justmysocks6.net/members/getsub.php?service=你的服务ID&#x26;id=你的订阅Token</code></li>
+</ul>
+<p>在客户端的订阅管理中打开现有的 JMS 订阅项，将 URL 开头的 <code>jmssub.net</code> 完整替换为当前可用的镜像域名（例如 <code>justmysocks6.net</code>），保存后重新触发更新，客户端便能以直连方式成功取回节点。</p>
+<div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 1.25rem; margin: 1.75rem 0;">
+  <div style="font-weight: 700; color: #1e40af; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+    <span>🔒</span> 安全性与证书保障说明
+  </div>
+  <p style="margin: 0; color: #1e3a8a; font-size: 0.9rem; line-height: 1.65;">
+    官方镜像站配置了完整合规的独立 SSL/TLS 证书，直接替换域名不会触发客户端证书安全警告。更重要的是，这种替换直接面向官方服务器，完全避开了第三方在线订阅转换工具可能带来的 Token 泄露隐患，既安全又原生。
+  </p>
+</div>
+<p>由于镜像域名是针对国内网络优化的官方入口，本地运营商对其没有设置特殊的连接拦截。客户端便能直接以直连方式顺畅连接，成功取回所有节点的最新动态参数与连接密钥。</p>
+<h2 id="四-方案三添加官方域名参数防止节点失效">四、 方案三：添加官方域名参数防止节点失效</h2>
+<p>除了替换订阅域名，Just My Socks 后端还原生支持特定的防封查询参数。默认订阅下发的节点配置中部分使用的是静态 IP 地址，一旦机房因网络波动触发 IP 轮换，本地就必须频繁重新更新订阅才能保持连接。</p>
+<p>核心参数的使用格式与规范如下所示：</p>
+<ul>
+<li><strong>单参数形式</strong>：<code>https://justmysocks6.net/members/getsub.php?service=XXXXX&#x26;id=YYYYY&#x26;usedomains=1</code></li>
+<li><strong>组合参数形式</strong>：若希望排除不需要的协议节点，还可级联参数，如追加 <code>&#x26;noss=1</code>（排除 Shadowsocks 节点）。</li>
+</ul>
+<p>在订阅链接末尾附加 <code>&#x26;usedomains=1</code> 参数后，服务端会将节点强制导出为形如 <code>cXs1.jamjams.net</code> 的专属动态域名。当后端自动换 IP 时，域名的 DNS 解析会在云端静默同步，客户端本地无需反复拉取订阅即可自动恢复通信。</p>
+<p>这一技巧特别适合搭配镜像域名替换法一同使用，两者结合既解决了国内订阅难以更新的痛点，又赋予了节点抵抗 IP 变动的长期稳定性。</p>
+<h2 id="五-方案四后台单节点免订阅手动导入保底">五、 方案四：后台单节点免订阅手动导入保底</h2>
+<p>在极端网络封锁下，如果自动化订阅完全无法拉取，登录官方后台手动拷贝单节点配置是打破死锁的终极手段。很多用户以为订阅失败就无法使用，实际上会员中心早已为每个节点生成了独立的配置代码与二维码。</p>
+<p>手动获取并导入节点只需按以下步骤执行：</p>
+<ul>
+<li><strong>登录会员中心套餐页</strong>：通过当前可用的镜像站（如 <a href="aff://base">justmysocks6.net</a>）登录个人后台，点击进入已激活的服务详情页（Service Details）。</li>
+<li><strong>提取单节点代码</strong>：页面向下滚动至 Server Details 区域，每个节点均展示了对应的节点详情，点击节点即可一键复制类似 <code>vless://...</code> 或 <code>vmess://...</code> 的节点分享链接。</li>
+<li><strong>从剪贴板导入客户端</strong>：打开本地客户端（如 v2rayN 按快捷键 <code>Ctrl + V</code>，或在 Shadowrocket 首页点击右上角加号从剪贴板添加），即可免订阅直接生成独立节点。</li>
+</ul>
+<p>成功手动导入单个可用节点后，先将其设为主路由并开启全局代理。此时外网通道已经恢复畅通，接下来只需回到客户端中再次点击“更新订阅”，其余节点便能立刻恢复全量同步。</p>
+<h2 id="六-主流客户端常见报错与配置注意事项">六、 主流客户端常见报错与配置注意事项</h2>
+<p>在排查订阅更新失败时，不同操作系统与客户端所抛出的报错信息各有特点。针对性地调整客户端配置能避免走弯路，各主流客户端的典型表现及应对措施汇总如下：</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th align="left">客户端平台</th><th align="left">典型错误提示</th><th align="left">针对性解决要点</th></tr></thead><tbody><tr><td align="left"><strong>Windows (v2rayN)</strong></td><td align="left">远程主机强迫关闭现有连接 / 握手超时</td><td align="left">修改订阅分组中的 URL 域名为镜像站，并升级至带完整内核的版本</td></tr><tr><td align="left"><strong>全平台 (Clash Verge Rev)</strong></td><td align="left">Invalid Clash YAML / 下载配置文件失败</td><td align="left">确认内核切换为 Mihomo，并在配置设置中开启使用系统代理下载</td></tr><tr><td align="left"><strong>iOS (Shadowrocket)</strong></td><td align="left">Network Connection Lost / 更新超时</td><td align="left">在订阅设置中更新链接，或先连接任一节点后再左滑手动更新</td></tr></tbody></table>
+<p>排查过程中还需格外关注客户端的内核版本。如果订阅已经成功拉取但节点仍然显示超时，通常是客户端内核过旧无法解析新协议所致。建议保持客户端处于最新稳定版，避免将协议不兼容误判为订阅失效。</p>
+<h2 id="七-常见问题答疑与故障排查快速总结">七、 常见问题答疑与故障排查快速总结</h2>
+<p>订阅更新失败在本质上并不是服务本身瘫痪，而是本地直连网络到订阅分发域名之间的链路阻断。只要理清“代理流量”与“订阅数据”通道分离的底层逻辑，遇到连接异常时就能精准定位问题。</p>
+<p>日常使用建议遵循标准排查顺序：优先利用现有节点开启代理刷新；若全面阻断，则采用 <code>justmysocks6.net</code> 镜像替换法；在 URL 末尾附加 <code>&#x26;usedomains=1</code> 参数预防 IP 失效；必要时登录后台手动提取单节点保底。</p>
+<div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 16px; padding: 2rem; color: white; margin: 2.5rem 0; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.1);">
+  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem;">
+    <div>
+      <span style="background: #10b981; color: white; font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 4px; text-transform: uppercase;">官方镜像与福利</span>
+      <h3 style="margin: 0.5rem 0 0; color: #f8fafc; font-size: 1.35rem; font-weight: 700;">获取 Just My Socks 最新可用入口与循环折扣</h3>
+    </div>
+    <div style="background: rgba(255, 255, 255, 0.08); border: 1px dashed rgba(255, 255, 255, 0.25); padding: 0.5rem 1rem; border-radius: 8px; text-align: center;">
+      <span style="font-size: 0.75rem; color: #94a3b8; display: block;">全场 5.2% 循环优惠码</span>
+      <code style="font-size: 1.15rem; color: #38bdf8; font-weight: 800; letter-spacing: 1px;">JMS9272283</code>
+    </div>
+  </div>
+  <p style="margin: 0 0 1.5rem; color: #cbd5e1; font-size: 0.95rem; line-height: 1.65;">
+    如果你经常需要登录后台查看服务状态、获取最新节点或管理套餐，建议收藏本站整理的官方镜像导航列表。若你的订阅更新成功但节点仍无法正常上网，建议参考本站的 <a href="/posts/just-my-socks-troubleshooting-guide" style="color: #60a5fa; text-decoration: underline; font-weight: 600;">JMS 无法连接 7 步全流程排查指南</a> 进行深度诊断。
+  </p>
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+    <a href="/mirrors" style="display: inline-flex; align-items: center; justify-content: center; background: #3b82f6; color: white; font-weight: 700; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-size: 0.95rem; transition: background 0.2s;">查看最新官方镜像站汇总 →</a>
+    <a href="aff://base" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.1); color: #f8fafc; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; font-size: 0.95rem; border: 1px solid rgba(255, 255, 255, 0.2);">直达 Just My Socks 官网</a>
+  </div>
+</div> </article> <div class="back" data-astro-cid-gysqo7gh> <a href="/posts" data-astro-cid-gysqo7gh><span data-astro-cid-gysqo7gh>&larr;</span> 资源中心</a> <a href="/products" data-astro-cid-gysqo7gh>极速挑选方案 <span data-astro-cid-gysqo7gh>&rarr;</span></a> </div> </div> </div> </body></html>
